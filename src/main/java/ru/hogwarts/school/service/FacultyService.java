@@ -7,8 +7,9 @@ import ru.hogwarts.school.model.Faculty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
 @Service
-public class FacultyService  {
+public class FacultyService {
     private final HashMap<Long, Faculty> facultys = new HashMap<>();
     private Long idxFacultetSpinner = 0L;
 
@@ -43,7 +44,7 @@ public class FacultyService  {
         return removeFaculty;
     }
 
-public ArrayList<Faculty> filteredByColor(String color) {
+    public ArrayList<Faculty> filteredByColor(String color) {
         ArrayList<Faculty> factColor = new ArrayList<>();
         Set<Long> setKey = facultys.keySet();
         for (Long s : setKey) {

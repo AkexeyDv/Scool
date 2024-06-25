@@ -33,7 +33,6 @@ public class StudentService {
     }
 
 
-
     public Student readStudent(Long idStudent) {
         if (!students.containsKey(idStudent)) {
             throw new ExceptionApp("Такого студента нет. Чтение невозможно");

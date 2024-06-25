@@ -9,10 +9,11 @@ import ru.hogwarts.school.model.Faculty;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacultyServiceTest {
-    FacultyService out=new FacultyService();
+    FacultyService out = new FacultyService();
+
     @BeforeEach
-    void setUp(){
-        Faculty newFaculty=new Faculty(10l,"G","Red");
+    void setUp() {
+        Faculty newFaculty = new Faculty(10l, "G", "Red");
 
         out.createFaculty(newFaculty);
     }
@@ -20,37 +21,37 @@ class FacultyServiceTest {
     @Test
     void createFaculty() {
 
-        Assertions.assertEquals(1l,out.readFaculty(1l).getId());
+        Assertions.assertEquals(1l, out.readFaculty(1l).getId());
 
     }
 
     @Test
     void updateFaculty() {
-        Faculty updateFaculty=new Faculty(1l,"Sliseren","Black");
+        Faculty updateFaculty = new Faculty(1l, "Sliseren", "Black");
         out.updateFaculty(updateFaculty);
-        Assertions.assertEquals(out.readFaculty(1l).getName(),"Sliseren");
-        Assertions.assertEquals(out.readFaculty(1l).getColor(),"Black");
+        Assertions.assertEquals(out.readFaculty(1l).getName(), "Sliseren");
+        Assertions.assertEquals(out.readFaculty(1l).getColor(), "Black");
     }
 
     @Test
     void readFaculty() {
-        Faculty readFaculty=new Faculty(258l,"Griffendor","Red");
+        Faculty readFaculty = new Faculty(258l, "Griffendor", "Red");
         out.createFaculty(readFaculty);
-        Assertions.assertThrows(ExceptionApp.class,()->out.readFaculty(258l).getId());
-        Assertions.assertEquals(out.readFaculty(2l).getName(),"Griffendor");
+        Assertions.assertThrows(ExceptionApp.class, () -> out.readFaculty(258l).getId());
+        Assertions.assertEquals(out.readFaculty(2l).getName(), "Griffendor");
     }
 
     @Test
     void deleteFaculty() {
         out.deleteFaculty(1l);
-        Assertions.assertThrows(ExceptionApp.class,()->out.readFaculty(1l).getId());
+        Assertions.assertThrows(ExceptionApp.class, () -> out.readFaculty(1l).getId());
 
     }
 
     @Test
     void filteredByColor() {
-        out.createFaculty(new Faculty(0l,"A","Red"));
-        out.createFaculty(new Faculty(0l,"B","Blue"));
-        Assertions.assertEquals(out.filteredByColor("Red").stream().toArray().length,2);
+        out.createFaculty(new Faculty(0l, "A", "Red"));
+        out.createFaculty(new Faculty(0l, "B", "Blue"));
+        Assertions.assertEquals(out.filteredByColor("Red").stream().toArray().length, 2);
     }
 }
