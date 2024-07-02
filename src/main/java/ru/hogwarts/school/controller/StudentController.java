@@ -51,7 +51,7 @@ public class StudentController {
     @GetMapping("filtered/{age}")
     public ArrayList<Student> getStudentAgeStudent(@PathVariable int age) {
         System.out.println(age);
-        return studentService.filteredByAgeStudent(age);
+        return studentService.findByAge(age);
     }
 
 }

@@ -4,13 +4,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.ErrorApp.ExceptionApp;
+import ru.hogwarts.school.Repository.StudentRepository;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentServiceTest {
-    StudentService out = new StudentService();
+    private ru.hogwarts.school.Repository.StudentRepository StudentRepository;
+    StudentService out = new StudentService(StudentRepository);
 
     @BeforeEach
     void setUp() {
@@ -51,6 +53,6 @@ class StudentServiceTest {
         out.createStudent(new Student(0l, "A", 14));
         out.createStudent(new Student(0l, "B", 15));
         out.createStudent(new Student(0l, "C", 14));
-        Assertions.assertEquals(out.filteredByAgeStudent(14).stream().toArray().length, 2);
+        Assertions.assertEquals(out.findByAge(14).stream().toArray().length, 2);
     }
 }

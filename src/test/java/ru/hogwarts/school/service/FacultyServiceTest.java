@@ -4,12 +4,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.ErrorApp.ExceptionApp;
+import ru.hogwarts.school.Repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacultyServiceTest {
-    FacultyService out = new FacultyService();
+    private ru.hogwarts.school.Repository.FacultyRepository FacultyRepository;
+    FacultyService out = new FacultyService(FacultyRepository);
 
     @BeforeEach
     void setUp() {
@@ -52,6 +54,6 @@ class FacultyServiceTest {
     void filteredByColor() {
         out.createFaculty(new Faculty(0l, "A", "Red"));
         out.createFaculty(new Faculty(0l, "B", "Blue"));
-        Assertions.assertEquals(out.filteredByColor("Red").stream().toArray().length, 2);
+        Assertions.assertEquals(out.findByColor("Red").stream().toArray().length, 2);
     }
 }

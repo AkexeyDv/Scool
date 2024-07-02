@@ -50,7 +50,7 @@ public class FacultyController {
 
     @GetMapping("/filtered/{color}")
     public ArrayList<Faculty> getFacultyByColor(@PathVariable String color) {
-        return facultyService.filteredByColor(color);
+        return facultyService.findByColor(color);
     }
 
 
