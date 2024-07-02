@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     public ArrayList<Faculty> findByColor(String color);
+
 }

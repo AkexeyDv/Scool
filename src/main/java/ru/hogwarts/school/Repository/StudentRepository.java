@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface StudentRepository extends JpaRepository<Student,Long> {
     ArrayList<Student> findByAge(int age);
+
 }

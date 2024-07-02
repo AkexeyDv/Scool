@@ -48,6 +48,7 @@ public class StudentController {
         return removeStd;
     }
 
+
     @GetMapping("filtered/{age}")
     public ArrayList<Student> getStudentAgeStudent(@PathVariable int age) {
         System.out.println(age);

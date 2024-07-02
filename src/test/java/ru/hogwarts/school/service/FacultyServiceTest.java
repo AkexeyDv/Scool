@@ -43,6 +43,7 @@ class FacultyServiceTest {
         Assertions.assertEquals(out.readFaculty(2l).getName(), "Griffendor");
     }
 
+
     @Test
     void deleteFaculty() {
         out.deleteFaculty(1l);

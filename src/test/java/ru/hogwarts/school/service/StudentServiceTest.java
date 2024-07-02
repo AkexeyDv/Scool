@@ -48,6 +48,7 @@ class StudentServiceTest {
         Assertions.assertThrows(ExceptionApp.class, () -> out.readStudent(1l).getId());
     }
 
+
     @Test
     void filteredByAgeStudent() {
         out.createStudent(new Student(0l, "A", 14));
