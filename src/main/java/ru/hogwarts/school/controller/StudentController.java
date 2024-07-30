@@ -3,10 +3,12 @@ package ru.hogwarts.school.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @RequestMapping("/student")
 @RestController
@@ -30,6 +32,23 @@ public class StudentController {
         }
         return ResponseEntity.ok(studentService.readStudent(idStudent));
     }
+    @GetMapping(path = "/all")
+    public Collection<Student> getAll(){
+        return studentService.findByAllStudent();
+    }
+    @GetMapping
+    public ArrayList<Student> getStudentAge(@RequestParam("minAge") int minAge,
+                                                 @RequestParam("maxAge") int maxAge){
+        return studentService.findByAgeBetweenStudent(minAge,maxAge);
+    }
+
+    @GetMapping("{idStudent}/faculty")
+    public ResponseEntity<Faculty> getFaculty(@PathVariable long idStudent){
+        return ResponseEntity.ok(studentService.getFaculty(idStudent));
+    }
+
+
+
 
     @PutMapping("/put")
     public ResponseEntity<Student> putStudent(@RequestBody Student student) {

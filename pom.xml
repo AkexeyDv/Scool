@@ -59,7 +59,12 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.3.2</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>ru.hogwarts</groupId>
+            <artifactId>school</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

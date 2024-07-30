@@ -4,10 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.ErrorApp.ExceptionApp;
 import ru.hogwarts.school.Repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class FacultyService {
@@ -36,6 +35,11 @@ public class FacultyService {
         return facultyRepository.findById(idFaculty).get();
     }
 
+    public List<Student> getStudent(long idFaculty){
+        Faculty tmpFaculty=facultyRepository.findById(idFaculty).get();
+        return tmpFaculty.getStudent();
+    }
+
 
     public Faculty deleteFaculty(Long idFaculty) {
         Faculty delFaculty = readFaculty(idFaculty);
@@ -47,6 +51,7 @@ public class FacultyService {
 
         return facultyRepository.findByColor(color);
     }
+
 
     @Override
     public String toString() {

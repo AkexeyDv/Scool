@@ -1,17 +1,21 @@
 package ru.hogwarts.school.service;
 
+import org.aspectj.lang.annotation.RequiredTypes;
+import org.hibernate.boot.model.internal.QueryBinder;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.ErrorApp.ExceptionApp;
 import ru.hogwarts.school.Repository.StudentRepository;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
+
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -22,11 +26,13 @@ public class StudentService {
 
 
     public Student createStudent(Student student) {
-
-
+        student.setId(null);
         return studentRepository.save(student);
 
     }
+
+
+
 
 
     public Student updateStudent(Student student) {
@@ -45,14 +51,30 @@ public class StudentService {
         return delStudent;
     }
 
+
     public ArrayList<Student> findByAge(int age) {
-
-
         return studentRepository.findByAge(age);
+    }
+
+    public ArrayList<Student> findByAgeBetweenStudent(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+
+    public Collection<Student> findByAllStudent() {
+
+        return studentRepository.findAllStudent();
+    }
+
+    public Faculty getFaculty(Long idStudent){
+       
+        return studentRepository.findById(idStudent)
+                .map(Student::getFaculty).orElse(null);
     }
 
     @Override
     public String toString() {
         return studentRepository.findAll().toString();
     }
+
 }
