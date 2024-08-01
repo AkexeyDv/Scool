@@ -7,18 +7,20 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+import static jakarta.persistence.GenerationType.AUTO;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @JsonProperty(access = READ_ONLY)
     private Long id;
     private String name;
     private int age;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="faculty_id",referencedColumnName = "id")
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
 
     public Student(Long id, String name, int age) {
@@ -28,12 +30,17 @@ public class Student {
 
     }
 
-    public Student(){}
+    public Student() {
+    }
 
-    public Faculty getFaculty(){
+    public Faculty getFaculty() {
         return faculty;
     }
 
+    @JsonIgnore
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
 
     public Long getId() {
         return id;

@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static jakarta.persistence.GenerationType.AUTO;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 
@@ -15,7 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 public class Faculty {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     private Long id;
     private String name;
     private String color;
@@ -30,6 +32,7 @@ public class Faculty {
         this.color = color;
     }
     public Faculty(){}
+    @JsonProperty
     public List<Student> getStudent(){
         return this.students;
     }

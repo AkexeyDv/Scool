@@ -32,9 +32,6 @@ public class StudentService {
     }
 
 
-
-
-
     public Student updateStudent(Student student) {
         return studentRepository.save(student);
     }
@@ -56,6 +53,10 @@ public class StudentService {
         return studentRepository.findByAge(age);
     }
 
+    public Student findById(Long idStudent) {
+        return studentRepository.findById(idStudent).get();
+    }
+
     public ArrayList<Student> findByAgeBetweenStudent(int minAge, int maxAge) {
         return studentRepository.findByAgeBetween(minAge, maxAge);
     }
@@ -66,8 +67,8 @@ public class StudentService {
         return studentRepository.findAllStudent();
     }
 
-    public Faculty getFaculty(Long idStudent){
-       
+    public Faculty getFaculty(Long idStudent) {
+
         return studentRepository.findById(idStudent)
                 .map(Student::getFaculty).orElse(null);
     }

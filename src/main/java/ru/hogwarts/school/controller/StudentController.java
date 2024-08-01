@@ -1,12 +1,16 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,6 +28,14 @@ public class StudentController {
         Student createStd = studentService.createStudent(student);
         return createStd;
     }
+    @PostMapping(value = "/{id}/avatar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> loadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException{
+        if(avatar.getSize()>1024*300){
+            return ResponseEntity.badRequest().body("Слишком большой размер файла");
+        }
+        return null;
+
+    }
 
     @GetMapping("{idStudent}")
     public ResponseEntity<Student> getStudent(@PathVariable Long idStudent) {
@@ -36,7 +48,7 @@ public class StudentController {
     public Collection<Student> getAll(){
         return studentService.findByAllStudent();
     }
-    @GetMapping
+    @GetMapping(path = "/range_age")
     public ArrayList<Student> getStudentAge(@RequestParam("minAge") int minAge,
                                                  @RequestParam("maxAge") int maxAge){
         return studentService.findByAgeBetweenStudent(minAge,maxAge);
