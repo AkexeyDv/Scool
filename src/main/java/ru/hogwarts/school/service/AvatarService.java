@@ -8,6 +8,9 @@ import ru.hogwarts.school.Repository.AvatarRepository;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,8 +33,7 @@ public class AvatarService {
 
     public void uploadAvatar(Long idStudent, MultipartFile file) throws IOException {
         Student student = studentService.findById(idStudent);
-        String exestensionFile = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-        Path pathFile = Path.of(avatarsDir, idStudent + "." + exestensionFile);
+        Path pathFile = Path.of(avatarsDir, idStudent + "." + getExe(file.getOriginalFilename()));
         Files.createDirectories(pathFile.getParent());
         Files.deleteIfExists(pathFile);
 
@@ -43,16 +45,40 @@ public class AvatarService {
             bis.transferTo(bos);
         }
 
-        Avatar avatar=findAvatar(idStudent);
+        Avatar avatar = findAvatar(idStudent);
         avatar.setStudent(student);
         avatar.setFilePath(pathFile.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
+        avatar.setPreview(smallImg(pathFile));
+        avatarRepository.save(avatar);
 
 
     }
 
-    public Avatar findAvatar(Long id){
-        return avatarRepository.findByStudentId(id).orElseThrow(null);
+    private byte[] smallImg(Path filePath) throws IOException {
+        try (InputStream is = Files.newInputStream(filePath);
+             BufferedInputStream bis = new BufferedInputStream(is, 1024);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        ) {
+            BufferedImage image = ImageIO.read(bis);
+            int height = image.getHeight() / (image.getWidth() / 100);
+            BufferedImage preview = new BufferedImage(100, height, image.getType());
+            Graphics2D graphics= preview.createGraphics();
+            graphics.drawImage(image,0,0,100,height,null);
+            graphics.dispose();
+            ImageIO.write(preview,getExe(filePath.getFileName().toString()),baos);
+            return baos.toByteArray();
+
+
+        }
+    }
+
+    private String getExe(String nameFile){
+        return nameFile.substring(nameFile.lastIndexOf(".") + 1);
+    }
+
+    public Avatar findAvatar(Long id) {
+        return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
 }
