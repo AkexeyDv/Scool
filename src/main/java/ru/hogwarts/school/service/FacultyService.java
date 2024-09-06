@@ -1,12 +1,13 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.ErrorApp.ExceptionApp;
 import ru.hogwarts.school.Repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FacultyService {
@@ -20,7 +21,6 @@ public class FacultyService {
 
 
     public Faculty createFaculty(Faculty faculty) {
-
         return facultyRepository.save(faculty);
 
     }
@@ -30,20 +30,24 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty readFaculty(Long idFaculty) {
+    public Faculty seekById(Long idFaculty) {
+        return Optional.of(facultyRepository.findById(idFaculty)).get().orElse(null);
 
-        return facultyRepository.findById(idFaculty).get();
+
     }
 
-    public List<Student> getStudent(long idFaculty){
-        Faculty tmpFaculty=facultyRepository.findById(idFaculty).get();
+    public List<Student> getStudent(long idFaculty) {
+        Faculty tmpFaculty = facultyRepository.findById(idFaculty).get();
         return tmpFaculty.getStudent();
     }
 
 
     public Faculty deleteFaculty(Long idFaculty) {
-        Faculty delFaculty = readFaculty(idFaculty);
+        Faculty delFaculty = seekById(idFaculty);
+
         facultyRepository.deleteById(idFaculty);
+
+
         return delFaculty;
     }
 

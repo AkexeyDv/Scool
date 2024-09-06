@@ -78,14 +78,16 @@ public class StudentController {
     @GetMapping(value = "avatar/preview/{id}")
     public ResponseEntity<byte[]> downloadAvatarPreview(@PathVariable Long id) {
         Avatar avatar = avatarService.findAvatar(id);
+        if (avatar!=null) {
 
-        HttpHeaders headers = new HttpHeaders();
+            HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getPreview().length);
+            headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
+            headers.setContentLength(avatar.getPreview().length);
 
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
-
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getPreview());
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @GetMapping(value = "avatar/{id}")
@@ -127,7 +129,6 @@ public class StudentController {
 
     @GetMapping("filtered/{age}")
     public ArrayList<Student> getStudentAgeStudent(@PathVariable int age) {
-        System.out.println(age);
         return studentService.findByAge(age);
     }
 

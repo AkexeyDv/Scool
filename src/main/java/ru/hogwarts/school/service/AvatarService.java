@@ -79,6 +79,6 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long id) {
-        return avatarRepository.findByStudentId(id).orElse(new Avatar());
+        return avatarRepository.findByStudentId(id).orElse(null);
     }
 }

@@ -7,8 +7,6 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
-import static jakarta.persistence.GenerationType.AUTO;
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 public class Student {
